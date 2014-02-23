@@ -1,8 +1,13 @@
-<tr>
+<% if line_item == @current_item %>
+	<tr id="current_item">
+<% else %>
+	<tr>
+<% end %>
+
 	<td><%= line_item.quantity %>&times;</td>
 	<td><%= truncate(line_item.product.title, length: 60, separator: ' ', omission: ' ...') %></td>
 	<td class="item_price"><%= number_to_currency(line_item.total_price)%></td>
 </tr>
 <tr>
-	<td><%= button_to 'Remove', line_item, method: :delete %></td>
+	<td><%= button_to 'Remove', line_item, method: :delete, remote: true %></td>
 </tr>

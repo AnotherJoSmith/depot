@@ -32,6 +32,7 @@ class LineItemsController < ApplicationController
     respond_to do |format|
       if @line_item.save
         format.html { redirect_to store_url }
+        format.js   { @current_item = @line_item }
         format.json { render action: 'show', status: :created, location: @line_item }
       else
         format.html { render action: 'new' }
@@ -57,9 +58,11 @@ class LineItemsController < ApplicationController
   # DELETE /line_items/1
   # DELETE /line_items/1.json
   def destroy
+    @cart = @line_item.cart
     @line_item.cart.remove_product(@line_item.product_id)
     respond_to do |format|
-      format.html { redirect_to store_url, notice: "Item removed" }
+      format.html { head :no_content}
+      format.js
       format.json { head :no_content }
     end
   end
