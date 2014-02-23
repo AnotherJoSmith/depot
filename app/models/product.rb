@@ -15,6 +15,10 @@ class Product < ActiveRecord::Base
 		Product.order(:updated_at).last
 	end
 
+	def destroy_all_line_items
+		line_items.each { |line_item| line_items.delete(line_item) }
+	end
+
 	def ensure_not_referenced_by_any_line_item
 		if line_items.empty?
 			return true
